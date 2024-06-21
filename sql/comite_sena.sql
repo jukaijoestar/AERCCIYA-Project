@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-06-2024 a las 20:47:09
+-- Tiempo de generación: 21-06-2024 a las 18:26:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -37,25 +37,21 @@ CREATE TABLE `aprendiz` (
   `Segundo_Apellido` varchar(50) NOT NULL,
   `Email` varchar(100) DEFAULT NULL,
   `Telefono` varchar(20) DEFAULT NULL,
-  `ID_Ficha` int(11) DEFAULT NULL
+  `ID_Ficha` int(11) DEFAULT NULL,
+  `Imagen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `aprendiz`
 --
 
-INSERT INTO `aprendiz` (`ID_Aprendiz`, `Numero_Documento`, `Tipo_Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Primer_Apellido`, `Segundo_Apellido`, `Email`, `Telefono`, `ID_Ficha`) VALUES
-(1, '123444344443', 'CC', 'Limona', 'Waos', 'Ola', 'Tilin', 'sadasd@gmail.com', '123577777', 1),
-(2, '113213', 'CC', '12312', 'asdasd', 'sadadsad', 'asdasda', 'asdadsa@gmail.com', '12312315', 1),
-(3, '123', 'TI', 'Ola', 'Soy', 'Esteban', 'xd', 'fdsfsd@gmail.com', '1231253', 1),
-(4, '123123321', 'CC', '123ewas', 'adsdas', 'asdasd', 'asdasd', 'asdadsa@gmail.com', '123123123', 1),
-(5, '1234', 'CC', 'cwqe', 'ewq', 'qwe', 'qweqwe', 'qweqwe@gmail.com', '1234', 1),
-(6, '123123', 'CC', 'sdada', 'dasddddddddd', 'dddddddd', 'ddddddddddd', 'ddasdd@gmail.com', '123123', 1),
-(7, '123123333', 'CC', 'saddsa', 'asda', 'asdad', 'asdasasd', 'sdasd@gmail.com', 'asdasdasd', 1),
-(8, '12354344323', 'CC', 'cwqe', 'Ana', 'a', 'Ariza', 'a@gmail.com', '3195964478', 1),
-(9, '12312333333333333333333333', 'CC', 'dddddd', 'ddddddcccccccccccccc', 'vvvvvvvvvc', 'ccccccccccccc', 'dsasd@gmail.com', '1234444', 1),
-(10, '1048264905', 'CC', 'Steven', 'David', 'Camargo', 'Narvaez', 'stivencito123@gmail.com', '3007097628', 11),
-(11, '1048264905', 'CC', 'Steven', 'David', 'Camargo', 'Narvaez', 'stivencito123@gmail.com', '3007097628', 11);
+INSERT INTO `aprendiz` (`ID_Aprendiz`, `Numero_Documento`, `Tipo_Documento`, `Primer_Nombre`, `Segundo_Nombre`, `Primer_Apellido`, `Segundo_Apellido`, `Email`, `Telefono`, `ID_Ficha`, `Imagen`) VALUES
+(49, '1048264905', 'CE', 'omar', 'Daviddddddddd', 'Camargo', 'Narvaez', 'stivencito123@gmail.com', '3007097628', 16, 'R.jpg'),
+(59, '10828352977', 'CC', 'Steven', 'raul', 'alfonso', 'mosquera', 'omar123@gmail.com', '2017281410', 0, '3155cae422f11de4a94b92337751b0d1.jpg'),
+(60, '10828352977', 'CC', 'Steven', 'raul', 'alfonso', 'mosquera', 'omar123@gmail.com', '2017281410', 0, '3155cae422f11de4a94b92337751b0d1.jpg'),
+(61, '1048264905', 'CC', 'Omar', 'Alfonso', 'Camargo', 'Mosquera', 'stivencito123@gmail.com', '3007097628', 18, 'descarga.png'),
+(63, '1048264905', 'CC', 'Antony ', 'Osorio', 'Camargo', 'Mosquera', 'stivencito123@gmail.com', '3007097628', 16, '3155cae422f11de4a94b92337751b0d1 (1).jpg'),
+(66, '1048264905', 'TI', 'esteban', 'Osorio', 'Camargo', 'Mosquera', 'stivencito123@gmail.com', '3007097628', 17, '3155cae422f11de4a94b92337751b0d1 (1).jpg');
 
 -- --------------------------------------------------------
 
@@ -75,31 +71,6 @@ CREATE TABLE `centro` (
 --
 
 INSERT INTO `centro` (`id`, `nombre`, `direccion`, `regional_id`) VALUES
-(1, 'Centro para la Biodiversidad y el Turismo del Amazonas', 'Calle 10 No. 10-50, Leticia', 1),
-(2, 'Centro de los Recursos Naturales Renovables La Salada', 'Vereda La Salada, Caldas, Antioquia', 2),
-(3, 'Centro de Servicios de Salud', 'Carrera 48 No. 72-41, Medellín', 2),
-(4, 'Centro de Tecnología de la Manufactura Avanzada', 'Carrera 45 No. 52-40, Medellín', 2),
-(5, 'Centro para el Desarrollo del Hábitat y la Construcción', 'Calle 51 No. 53-68, Medellín', 2),
-(6, 'Centro Agroindustrial y Fortalecimiento Empresarial', 'Carrera 20 No. 15-23, Arauca', 3),
-(7, 'Centro Nacional Colombo Alemán', 'Calle 30 No. 3E-164, Barranquilla', 4),
-(8, 'Centro para el Desarrollo Agroecológico y Agroindustrial', 'Calle 52 No. 46-50, Barranquilla', 4),
-(9, 'Centro Industrial y de Aviación', 'Calle 30 No. 8-58, Barranquilla', 4),
-(10, 'Centro de Gestión Administrativa', 'Carrera 13 No. 65-10, Bogotá', 5),
-(11, 'Centro de Gestión de Mercados, Logística y Tecnologías de la Información', 'Calle 15 No. 31-42, Bogotá', 5),
-(12, 'Centro de Electricidad, Electrónica y Telecomunicaciones', 'Carrera 7 No. 40-53, Bogotá', 5),
-(13, 'Centro de Formación en Talento Humano en Salud', 'Carrera 19 No. 32-20, Bogotá', 5),
-(14, 'Centro Multisectorial de Ternera', 'Calle 31 No. 71-45, Cartagena', 6),
-(15, 'Centro Internacional de Biotecnología y Biodiversidad', 'Calle 30 No. 27-57, Cartagena', 6),
-(16, 'Centro de Logística y Promoción Ecoturística del Magdalena', 'Carrera 2 No. 29-68, Cartagena', 6),
-(17, 'Centro Industrial de Mantenimiento y Manufactura', 'Calle 10 No. 14-80, Tunja', 7),
-(18, 'Centro de Gestión Administrativa y Fortalecimiento Empresarial', 'Carrera 7 No. 21-43, Tunja', 7),
-(19, 'Centro Minero', 'Vereda Morcá, Sogamoso', 7),
-(20, 'Centro de Comercio y Servicios', 'Carrera 23 No. 57-43, Manizales', 8),
-(21, 'Centro de Procesos Industriales y Construcción', 'Carrera 24 No. 33-57, Manizales', 8),
-(22, 'Centro de la Amazonia', 'Carrera 12 No. 8-24, Florencia', 9),
-(23, 'Centro Agroindustrial y Fortalecimiento Empresarial del Casanare', 'Carrera 19 No. 10-34, Yopal', 10),
-(24, 'Centro de Teleinformática y Producción Industrial', 'Calle 4 No. 8-57, Popayán', 11),
-(25, 'Centro de Comercio y Servicios', 'Carrera 6 No. 2-43, Popayán', 11),
 (26, 'Centro Biotecnológico del Caribe', 'Carrera 17 No. 14-20, Valledupar', 12),
 (27, 'Centro de Operación y Mantenimiento Minero', 'Calle 13 No. 8-34, Valledupar', 12),
 (28, 'Centro de Recursos Naturales, Industria y Biodiversidad', 'Carrera 1 No. 4-56, Quibdó', 13),
@@ -153,7 +124,32 @@ INSERT INTO `comite` (`id`, `id_aprendiz`, `id_ficha`, `descripcion`, `num`) VAL
 (7, 1, 1, 'ewqeqweqqq', 2),
 (8, 5, 1, 'el,wpfomwepofmwpofmwoemffwfo ahhahahahah', 1),
 (9, 10, 11, 'se porta demasiado mal ', 2),
-(10, 1, 1, 'el aprendiz debe ser remitido a bienestar', 1);
+(10, 1, 1, 'el aprendiz debe ser remitido a bienestar', 1),
+(11, 1, 16, 'esta persona fue aplazada', 2),
+(12, 1, 16, 'esta persona fue expulada', 6),
+(13, 1, 16, 'lo en encontraron vendiendo perico en los baños', 5),
+(14, 22, 17, 'esta persona se porta muy mal en clases y no asiste', 1),
+(15, 22, 17, 'lo mismo que el comite pasado', 2),
+(16, 22, 17, 'no mijo todavia?', 3),
+(17, 22, 17, 'vamos es a sacarte del sena', 4),
+(18, 22, 17, 'vendiendo?', 5),
+(19, 22, 17, 'comprando?', 6),
+(20, 46, 16, 'gggg', 1),
+(21, 53, 17, 'esta persona tiene que entregar un informe completo', 5),
+(22, 54, 21, 'esta persona fue aplazada', 1),
+(23, 54, 21, 'esta persona fue encontrada metiendo vicio', 2),
+(24, 36, 16, 'que es la vaina mija', 5),
+(25, 36, 16, 'aja y entonces', 6),
+(26, 36, 16, 'malooo', 2),
+(27, 36, 16, 'locooo', 3),
+(28, 52, 16, 'locooo', 5),
+(29, 52, 16, 'locooo', 2),
+(30, 52, 16, 'klk', 6),
+(31, 52, 16, 'klkl mamawebo', 6),
+(32, 52, 16, 'ajaaaaaaaaaaaaaaa', 2),
+(33, 47, 16, 'este man tenia una gorra', 3),
+(34, 63, 16, 'este man tiene el dedo mocho', 1),
+(35, 66, 17, 'esteban va para comite', 1);
 
 -- --------------------------------------------------------
 
@@ -167,8 +163,6 @@ CREATE TABLE `comite_general` (
   `fecha` date NOT NULL,
   `hora_inicio` time NOT NULL,
   `hora_fin` time NOT NULL,
-  `lugar` varchar(255) NOT NULL,
-  `direccion` varchar(255) NOT NULL,
   `puntos_destacados` text NOT NULL,
   `objetivos` text NOT NULL,
   `ID_Ficha` int(11) NOT NULL,
@@ -183,9 +177,9 @@ CREATE TABLE `comite_general` (
 -- Volcado de datos para la tabla `comite_general`
 --
 
-INSERT INTO `comite_general` (`id`, `nombre`, `fecha`, `hora_inicio`, `hora_fin`, `lugar`, `direccion`, `puntos_destacados`, `objetivos`, `ID_Ficha`, `desarrollo`, `asistentes`, `actividad`, `responsable`, `fecha_compromiso`) VALUES
-(3, 'sancion ', '2024-06-06', '12:00:00', '12:00:00', 'sena ', 'cll3 num 40', 'hhhhhhhhhggg', 'hhhh', 2, '', '', '', '', NULL),
-(16, 'sancion 23', '2024-06-06', '17:44:00', '21:41:00', 'sena ', 'cll3 num 40', 'nhhhhhhh', 'hjjkjkjk', 1, '', '', '', '', NULL);
+INSERT INTO `comite_general` (`id`, `nombre`, `fecha`, `hora_inicio`, `hora_fin`, `puntos_destacados`, `objetivos`, `ID_Ficha`, `desarrollo`, `asistentes`, `actividad`, `responsable`, `fecha_compromiso`) VALUES
+(3, 'sancion ', '2024-06-06', '12:00:00', '12:00:00', 'hhhhhhhhhggg', 'hhhh', 2, '', '', '', '', NULL),
+(16, 'sancion 23', '2024-06-06', '17:44:00', '21:41:00', 'nhhhhhhh', 'hjjkjkjk', 1, '', '', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -211,7 +205,9 @@ INSERT INTO `ficha` (`ID_Ficha`, `Numero_Ficha`, `Nombre_Ficha`, `modalidad_id`,
 (17, 234567, 'Mantenimiento de Equipos Biomédicos', 2, 2, 2),
 (18, 345678, 'Diseño Gráfico Digital', 1, 1, 3),
 (19, 456789, 'Administración de Empresas Agropecuarias', 1, 1, 4),
-(20, 567890, 'Ingeniería de Sistemas', 2, 2, 5);
+(20, 567890, 'Ingeniería de Sistemas', 2, 2, 5),
+(21, 12345678, 'sistemas', 1, 2, 27),
+(22, 12121212, 'construccion', 1, 2, 35);
 
 -- --------------------------------------------------------
 
@@ -321,7 +317,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`Id`, `Username`, `Email`, `Age`, `Password`) VALUES
-(1, 'Esteban', 'Esteban@gmail.com', 12, '$2y$10$iV2zom2yRzkU71f1qBL2o.tuslzLAhaJU8P3CEdlrOVSJFqcp6Y1.');
+(1, 'Esteban', 'Esteban@gmail.com', 12, '$2y$10$iV2zom2yRzkU71f1qBL2o.tuslzLAhaJU8P3CEdlrOVSJFqcp6Y1.'),
+(2, 'steven', 'stevencito123@gmail.com', 20, '$2y$10$Con2S3E2Biet0t/HjVX65eigGPMoEMlivn3QisnFqXPCGtWRko2Ai');
 
 --
 -- Índices para tablas volcadas
@@ -397,7 +394,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `aprendiz`
 --
 ALTER TABLE `aprendiz`
-  MODIFY `ID_Aprendiz` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID_Aprendiz` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `centro`
@@ -409,7 +406,7 @@ ALTER TABLE `centro`
 -- AUTO_INCREMENT de la tabla `comite`
 --
 ALTER TABLE `comite`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `comite_general`
@@ -421,7 +418,7 @@ ALTER TABLE `comite_general`
 -- AUTO_INCREMENT de la tabla `ficha`
 --
 ALTER TABLE `ficha`
-  MODIFY `ID_Ficha` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ID_Ficha` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `formacion`
@@ -445,36 +442,17 @@ ALTER TABLE `regional`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `aprendiz`
---
-ALTER TABLE `aprendiz`
-  ADD CONSTRAINT `aprendiz_ibfk_1` FOREIGN KEY (`ID_Ficha`) REFERENCES `ficha` (`ID_Ficha`);
-
---
 -- Filtros para la tabla `centro`
 --
 ALTER TABLE `centro`
   ADD CONSTRAINT `centro_ibfk_1` FOREIGN KEY (`regional_id`) REFERENCES `regional` (`id`);
-
---
--- Filtros para la tabla `comite`
---
-ALTER TABLE `comite`
-  ADD CONSTRAINT `comite_ibfk_1` FOREIGN KEY (`id_aprendiz`) REFERENCES `aprendiz` (`ID_Aprendiz`),
-  ADD CONSTRAINT `comite_ibfk_2` FOREIGN KEY (`id_ficha`) REFERENCES `ficha` (`ID_Ficha`);
-
---
--- Filtros para la tabla `comite_general`
---
-ALTER TABLE `comite_general`
-  ADD CONSTRAINT `fk_id_ficha` FOREIGN KEY (`ID_Ficha`) REFERENCES `ficha` (`ID_Ficha`);
 
 --
 -- Filtros para la tabla `ficha`
