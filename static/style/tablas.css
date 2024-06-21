@@ -1,0 +1,175 @@
+.title-accion {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    margin-bottom: 20px;
+}
+
+.title-accion div{
+    display: flex;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0px 6px;
+}
+
+table thead th {
+    font-weight: 400;
+    color: rgb(185, 185, 185);
+    font-size: 13px;
+    text-align: center;
+    padding-bottom: 15px;
+    /* border-bottom: 1px solid #e0e0e0; */
+}
+
+table td {
+    padding: 10px 2px;
+    text-align: center;
+    border-top: 1px solid #dddddd00;
+    border-bottom: 1px solid #dddddd00;
+    background-color: #ffffff;
+    font-size: 13px;
+}
+
+.fila td:first-child {
+    border-top-left-radius: 1.2rem;
+    border-bottom-left-radius: 1.2rem;
+    border-left: 1px solid #dddddd00;
+
+}
+
+.fila td:nth-last-child(1) {
+    border-top-right-radius: 1.2rem;
+    border-bottom-right-radius: 1.2rem;
+    border-right: 1px solid #dddddd00;
+}
+
+table tr:hover td {
+    background-color: #bbb9b900;
+}
+
+table .formacion {
+    text-decoration: none;
+
+}
+
+.editar {
+    background-color: #28a745;
+    cursor: pointer;
+    color: white;
+    outline: none;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 0.8rem;
+    display: inline-block;
+    align-items: center;
+    align-content: center;
+}
+
+.borrar {
+    background-color: #db2121;
+    cursor: pointer;
+    color: white;
+    outline: none;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 0.8rem;
+    display: inline-block;
+    align-items: center;
+    align-content: center;
+}
+
+.editar i,
+.borrar i,
+.info i {
+    font-size: 15px;
+}
+
+.agregar img {
+    width: 25px;
+    height: auto;
+}
+
+.agregar {
+    background-color: rgb(225, 225, 225);
+    color: #7a7a7a;
+    outline: none;
+    border: none;
+    gap: 7px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 0.9rem;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    margin-right: 10px;
+    transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.agregar:hover {
+    background-color: rgb(247, 247, 247);
+    color: #28a745;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.062);
+}
+
+.agregar i {
+    font-size: 20px;
+}
+
+.boton-tabla {
+    background-color: rgb(225, 225, 225);
+    color: #7a7a7a;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 0.7rem;
+    display: flex;
+    display: inline-block;
+    align-items: center;
+    align-content: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.boton-tabla:hover {
+    background-color: rgb(247, 247, 247);
+    color: #28a745;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.062);
+}
+
+.boton-tabla i {
+    font-size: 18px;
+}
+
+/*ESTILOS EN MODO DARK PARA EL MENU*/
+
+.dark-mode table td {
+    border-top: 2px solid #b1b1b1;
+    border-bottom: 2px solid #b1b1b1;
+    background-color: #b1b1b1;
+}
+
+.dark-mode table tr:hover td {
+    background-color: #bbb9b9d7;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(0, 128, 0, 0);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    border: 3px solid #fff;
+    background-color: #e0e0e0;
+    /* background-color: green; */
+}

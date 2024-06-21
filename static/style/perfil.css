@@ -1,0 +1,102 @@
+.edit-text{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    margin: 20px;
+}
+
+.edit-text i{
+    margin-right: 10px;
+    background-color: green;
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.edit-text p{
+    font-size: 15px;
+    border-left: 2px solid rgba(155, 155, 155, 0.205);
+    padding: 20px 10px;
+    width: 45%;
+}
+
+.form-edit-profile{
+    /* background-color: #fff; */
+    padding: 25px;
+    border-radius: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 95%;
+    margin: 10px auto;
+}
+
+
+.inpust-perfil {
+    min-width: 100%;
+}
+
+.inpust-perfil label{
+    font-weight: 600;
+    padding: 10px 20px;
+}
+
+.inpust-perfil input {
+    width: 100%;
+    /* background: rgb(239, 239, 239); */
+    outline: none;
+    border: 2px solid #ffffff;
+    border-radius: 1.3rem;
+    font-size: 16px;
+    padding: 20px 45px 20px 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.inpust-perfil input:focus {
+    border: 2px solid green;
+}
+
+.inpust-perfil input::placeholder {
+    color: #d3d3d3;
+}
+
+.inpust-perfil .icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: green;
+}
+
+.accion-btn{
+    border-top: 2px solid rgba(155, 155, 155, 0.205);
+    padding: 10px;
+    margin-top: 20px;
+    display: flex;
+    align-items: flex-end;
+    align-content: flex-end;
+    justify-content: flex-end;
+    grid-column: span 2;
+}
+
+.edit-button {
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    background-color: green;
+    color: #fff;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 1rem;
+    margin-top: 10px;
+    transition: .5s;
+    font-size: 16px;
+}
+
+.edit-button:hover {
+    background-color: #fff;
+    color: green;
+    box-shadow: 10px 12px 25px rgba(129, 129, 129, 0.26);
+}

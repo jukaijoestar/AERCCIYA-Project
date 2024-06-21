@@ -1,0 +1,9 @@
+body {
+    transition: background-color 0.5s ease; 
+}
+
+.dark{
+    /* background-color: #0a5cb8;  */
+    background-color: #383838; 
+    color: #fff;
+}
