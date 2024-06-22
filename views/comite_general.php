@@ -201,21 +201,21 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                             <div>
                                 <div class="form-columna-fechas">
                                     <div>
-                                        <label for="actividad">Actividad:</label>
-                                        <input type="text" id="actividad" name="actividad[]" required>
+                                        <label for="actividad">Actividad (Opcional):</label>
+                                        <input type="text" id="actividad" name="actividad[]">
                                     </div>
                                     <div>
-                                        <label for="responsable">Responsable:</label>
-                                        <input type="text" id="responsable" name="responsable[]" required>
+                                        <label for="responsable">Responsable (Opcional):</label>
+                                        <input type="text" id="responsable" name="responsable[]">
                                     </div>
                                     <div>
-                                        <label for="horaF">Hora Fin:</label>
-                                        <input type="time" id="horaF" name="horaF" required>
+                                        <label for="horaF">Hora Fin (Opcional):</label>
+                                        <input type="time" id="horaF" name="horaF">
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="asistentes">Asistentes (Formato de Documento):</label>
-                                    <input type="file" id="asistentes" name="asistentes" accept=".pdf,.doc,.docx,jpg,.png" required>
+                                    <label for="asistentes">Asistentes (Formato de Imagen):</label>
+                                    <input type="file" id="asistentes" name="asistentes" required>
                                 </div>
                             </div>
                             <div class="botones">
