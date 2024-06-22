@@ -40,11 +40,11 @@ $res_Email = isset($_SESSION['valid']) ? $_SESSION['valid'] : 'email@desconocido
                             </a>
                         </li>
                         <li class="enlaces">
-                            <a href="comite_general.php" class="link">
+                            <a href="comite_extraordinario.php" class="link">
                                 <img src="../static/img/comite-g.png" alt="">
                                 <div>
-                                    <span class="subtitle">Comité General</span>
-                                    <span class="subconte">Manejo de comités</span>
+                                    <span class="subtitle">Comité Extraordinario</span>
+                                    <span class="subconte">Manejo de comité Extraordinario</span>
                                 </div>
                             </a>
                         </li>
@@ -72,7 +72,7 @@ $res_Email = isset($_SESSION['valid']) ? $_SESSION['valid'] : 'email@desconocido
             <a id="modo"> </a>
         </div>
         <a href="edit.php" class="power"><i class="ph ph-user"></i></a>
-        <a href="../controllers/logout.php" class="power"><i class="ph ph-sign-out"></i></a>
+        <a href="#" class="power" onclick="confirmLogout(event)"><i class="ph ph-sign-out"></i></a>
     </div>
 </nav>
 
@@ -81,3 +81,4 @@ $res_Email = isset($_SESSION['valid']) ? $_SESSION['valid'] : 'email@desconocido
     crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 <script src="../static/js/menu.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

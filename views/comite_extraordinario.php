@@ -251,8 +251,32 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
             tabs[0].classList.add("active");
             all_content[0].classList.add("active");
 
+            // Variables para almacenar las selecciones
+            let id_regional, id_centro, id_formacion, id_modalidad;
+
+            // Función para actualizar las fichas
+            function updateFichas() {
+                if (id_regional && id_centro && id_formacion && id_modalidad) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '../controllers/get_fichas.php',
+                        data: {
+                            id_centro: id_centro,
+                            formacion_id: id_formacion,
+                            modalidad_id: id_modalidad
+                        },
+                        success: function(html) {
+                            $('#ficha').html(html);
+                        }
+                    });
+                } else {
+                    $('#ficha').html('<option value="">Seleccionar Ficha</option>');
+                }
+            }
+
+            // Evento de cambio para regional
             $('#regional').change(function() {
-                var id_regional = $(this).val();
+                id_regional = $(this).val();
                 if (id_regional) {
                     $.ajax({
                         type: 'POST',
@@ -262,6 +286,7 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                         },
                         success: function(html) {
                             $('#centro').html(html);
+                            id_centro = null; // Resetear la selección de centro
                             $('#ficha').html('<option value="">Seleccionar Ficha</option>');
                         }
                     });
@@ -271,25 +296,24 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                 }
             });
 
+            // Evento de cambio para centro
             $('#centro').change(function() {
-                var id_centro = $(this).val();
-                if (id_centro) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '../controllers/get_fichas.php',
-                        data: {
-                            id_centro: id_centro
-                        },
-                        success: function(html) {
-                            $('#ficha').html(html);
-                        }
-                    });
-                } else {
-                    $('#ficha').html('<option value="">Seleccionar Ficha</option>');
-                }
+                id_centro = $(this).val();
+                updateFichas();
             });
 
-            // Llenar la tabla de aprendices cuando se selecciona una ficha
+            // Evento de cambio para formacion
+            $('#formacion').change(function() {
+                id_formacion = $(this).val();
+                updateFichas();
+            });
+
+            // Evento de cambio para modalidad
+            $('#modalidad').change(function() {
+                id_modalidad = $(this).val();
+                updateFichas();
+            });
+
             // Llenar la tabla de aprendices cuando se selecciona una ficha
             $('#ficha').change(function() {
                 var id_ficha = $(this).val();
@@ -326,7 +350,6 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                     $('#tabla-aprendices .row:not(.header)').remove();
                 }
             });
-
 
             $('#iniciar-comite').click(function() {
                 var formData = new FormData();
@@ -396,5 +419,4 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
         });
     </script>
 </body>
-
 </html>

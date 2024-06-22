@@ -1,140 +1,58 @@
-<?php 
-   session_start();
-?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENA - Login</title>
-    <link rel="stylesheet" href="static/style/login.css">
+    <title>SENA - homepage</title>
+    <link rel="stylesheet" href="static/style/main-page.css">
     <link rel="icon" type="image/png" sizes="32x32" href="static/img/favicon.ico">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
-<main>
-    <div class="box">
-      <div class="inner-box">
-        <div class="forms-wrap">
-          <?php 
-            include("controllers/login.php");
-            include("controllers/registro.php");
-          ?>
-          <form action="" method="post" autocomplete="off" class="sign-in-form">
-            <!-- <div class="logo">
-              <img src="static/img/Sena.png" alt="sena" />
-              <h4>SENA</h4>
-            </div> -->
-
-            <div class="heading">
-              <h1>Bienvenido de nuevo</h1>
-              <h6>¿Aún no estás registrado?</h6>
-              <a href="#" class="toggle">Inscribirse</a>
-              <!-- <a href="register.php" class="toggle">Inscribirse</a> -->
+    <header id="inicio">
+        <img src="static/img/Sena-blanco.png" alt="">
+        <nav>
+            <h1>Servicio Nacional de Aprendizaje</h1>
+        </nav>
+        <a class="login" href="Starter_page.php">Ingresar<i class="ph ph-sign-in"></i></a>
+    </header>
+    
+    <section>
+        <main>
+            <div class="text" >
+                <h1 data-aos="fade-right" data-aos-duration="2000">Toda la informacion en una sola aplicación</h1> 
+                <p data-aos="fade-right" data-aos-duration="2000" data-aos-delay="400">gestiona sus comites, automatiza los flujos de<br> trabajo empresariales y le ayuda a trabajar de forma colectiva en todos los departamentos.</p>
             </div>
-
-            <div class="actual-form">
-              <div class="input-wrap">
-                <input class="input-field" type="text" name="login_email" id="login_email" autocomplete="off" required>
-                <label for="login_email">Correo electrónico</label>
-              </div>
-
-              <div class="input-wrap">
-                <input class="input-field" type="password" name="login_password" id="login_password" autocomplete="off" required>
-                <label for="login_password">Contraseña</label>
-              </div>
-
-              <input type="submit" class="sign-btn" name="login_submit" value="Acceder" required>
-
-              <p class="text">
-                ¿Olvidó su contraseña o sus datos de inicio de sesión?
-                <a href="#">Obtén ayuda </a> para iniciar sesión
-              </p>
+            <div class="parent">
+                <div data-aos="zoom-in-right" data-aos-duration="2000" data-aos-delay="500" class="div1" style="background-image: url('https://agenciapublicadeempleo.sena.edu.co/imgLayout/Boletines%20de%20prensa/Instructor%20SENA-min%20(1).jpg')"> </div>
+                <div data-aos="zoom-in-left" data-aos-duration="2000" data-aos-delay="500" class="div2" style="background-image: url('static/img/img2.jpg')"> </div>
+                <div data-aos="zoom-in-right" data-aos-duration="2000" data-aos-delay="500" class="div3" style="background-image: url('https://www.sena.edu.co/es-co/Noticias/NoticiasImg/Foto_22062021.jpeg')" > </div>
+                <div data-aos="flip-down" data-aos-duration="2000" data-aos-delay="500" class="div4" style="background-image: url('https://www.sena.edu.co/es-co/Noticias/NoticiasImg/FotografiaWEB_23012023.png')"> </div>
+                <div data-aos="zoom-in-down" data-aos-duration="2000" data-aos-delay="500" class="div5" style="background-image: url('https://www.wradio.com.co/resizer/v2/HRFV4HCK2VHC3FINS2R6PNGNPY.png?auth=4c4ee64a1e4cab7fb9cb5fba5523fc2ee8b0ed85734e8c64b228ff59b7d03839&width=377&height=377&quality=70&smart=true')"> </div>
+                <div data-aos="zoom-in-up" data-aos-duration="2000" data-aos-delay="500" class="div6" style="background-image: url('https://imagenes.eltiempo.com/files/image_1200_600/uploads/2024/04/03/660d5b9fc3744.jpeg')"> </div>  
+                <div data-aos="flip-down" data-aos-duration="2000" data-aos-delay="500" class="div7" style="background-image: url('https://www.portafolio.co/files/article_new_multimedia/uploads/2017/02/07/589a3947b03f6.jpeg')"> </div>  
             </div>
-          </form>
+        </main>
+    </section>
 
-          <form action="" method="post" class="sign-up-form">
-            <!-- <div class="logo">
-            <img src="static/img/Sena.png" alt="sena" />
-              <h4>SENA</h4>
-            </div> -->
+    <article class="redes">
+        <div class="linea"></div>
+        <a href="https://www.sena.edu.co/es-co/Paginas/default.aspx"><i class="ph ph-users-three"></i></a>
+        <a href="https://www.facebook.com/SENAAtlantico/?locale=es_LA"><i class="ph ph-facebook-logo"></i></a>
+        <a href="https://www.instagram.com/senacomunica/?hl=es-la"><i class="ph ph-instagram-logo"></i></a>
+        <a href="https://twitter.com/SENAComunica?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i class="ph ph-x-logo"></i></a>
+    </article>
 
-            <div class="heading">
-              <h1>Empezar</h1>
-              <h6>¿Ya tienes una cuenta?</h6>
-              <a href="#" class="toggle">Iniciar sesión</a>
-            </div>
+    <footer>
+        <p data-aos="flip-down" data-aos-duration="2000" data-aos-delay="600">Copyright &copy; <?php echo date("Y"); ?> Servicio Nacional de Aprendizaje SENA. Todos los derechos reservados.</p>
+    </footer>
 
-            <div class="actual-form">
-              <div class="input-wrap">
-                <input class="input-field" type="text" name="register_username" id="register_username" autocomplete="off" required>
-                <label>Nombre</label>
-              </div>
-
-              <div class="input-wrap">
-                  <input class="input-field" type="number" name="register_age" id="register_age" autocomplete="off" required>
-                  <label>Edad</label>
-              </div>
-
-              <div class="input-wrap">
-                  <input class="input-field" type="text" name="register_email" id="register_email" autocomplete="off" required>
-                  <label>Correo electrónico</label>
-              </div>
-
-              <div class="input-wrap">
-                  <input class="input-field" type="password" name="register_password" id="register_password" autocomplete="off" required>
-                  <label>Contraseña</label>
-              </div>
-
-              <input type="submit" class="sign-btn" name="register_submit" value="Registrar" required>
-
-              <p class="text">
-                Al registrarme, acepto los
-                <a href="#">Términos de servicios</a> y la
-                <a href="#">Política de privacidad</a>
-              </p>
-            </div>
-          </form>
-          
-        </div>
-
-
-        <div class="carousel">
-          <div class="images-wrapper">
-            <img src="https://www.sena.edu.co/es-co/Noticias/Galeria_SENA_IMG/Queremos%20tener%20una%20entidad%20igual%20al%20SENA%20en%20Curazao/11.JPG" class="image img-1 show" alt="" />
-            <img src="https://www.sena.edu.co/es-co/Noticias/NoticiasImg/Formacion-03102323.jpg" class="image img-2" alt="" />
-            <img src="https://www.sena.edu.co/es-co/Noticias/NoticiasImg/Aprendices-10072023.jpg" class="image img-3" alt="" />
-          </div>
-
-          <div class="text-slider">
-            <div class="text-wrap">
-              <div class="text-group">
-                <h2>No tienes de que preocuparte</h2>
-                <h2>Trabaja a tu manera</h2>
-                <h2>Disfruta de los beneficios</h2>
-              </div>
-            </div>
-
-            <div class="bullets">
-              <span class="active" data-value="1"></span>
-              <span data-value="2"></span>
-              <span data-value="3"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <div class="floating-icon">
-    <a href="main-page.php">
-      <i class="ph-light ph-arrow-counter-clockwise"></i>
-    </a>
-  </div>
-
-
-    <script src="static/js/login.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        offset:1
+      });
+    </script>
 </body>
 </html>
