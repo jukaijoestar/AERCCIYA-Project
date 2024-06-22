@@ -167,10 +167,6 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                                     <label for="horaI">Hora Inicio:</label>
                                     <input type="time" id="horaI" name="horaI" required>
                                 </div>
-                                <div>
-                                    <label for="horaF">Hora Fin:</label>
-                                    <input type="time" id="horaF" name="horaF" required>
-                                </div>
                             </div>
                         </div>
                         <div class="content">
@@ -212,8 +208,8 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                                         <input type="text" id="responsable" name="responsable[]" required>
                                     </div>
                                     <div>
-                                        <label for="fecha_compromiso">Fecha:</label>
-                                        <input type="date" id="fecha_compromiso" name="fecha_compromiso[]" required>
+                                        <label for="horaF">Hora Fin:</label>
+                                        <input type="time" id="horaF" name="horaF" required>
                                     </div>
                                 </div>
                                 <div>
@@ -315,9 +311,9 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                                     aprendiz.Segundo_Nombre + ' ' +
                                     aprendiz.Primer_Apellido + ' ' +
                                     aprendiz.Segundo_Apellido +
-                                    '</div>'+
+                                    '</div>' +
                                     '<div class="cell">' + aprendiz.Telefono + '</div>' +
-                                    '<div class="cell"><input type="text" name="observaciones[' + aprendiz.Numero_Documento + ']" placeholder="Añadir observaciones"></div>' +
+                                    '<div class="cell"><input type="text" name="observaciones[' + aprendiz.Numero_Documento + ']" placeholder="Añadir observaciones" required></div>' +
                                     '</div>'
                                 );
                             });
