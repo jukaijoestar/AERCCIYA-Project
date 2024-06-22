@@ -53,6 +53,7 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
     <link rel="icon" type="image/png" sizes="32x32" href="../static/img/favicon.ico">
     <link rel="stylesheet" href="../static/style/comiteGeneral.css">
     <link rel="stylesheet" href="../static/style/tablas.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>Comite Extraordinario</title>
     <style>
         .table {
@@ -98,7 +99,7 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                 <form id="filtro-fichas" method="post">
                     <div>
                         <label for="Acta">Número del acta:</label>
-                        <input type="text" value="Acta ">
+                        <input type="text" id="Acta" name="Acta" value="Acta " required>
                     </div>
                     <div>
                         <label for="regional">Regional:</label>
@@ -289,6 +290,7 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
             });
 
             // Llenar la tabla de aprendices cuando se selecciona una ficha
+            // Llenar la tabla de aprendices cuando se selecciona una ficha
             $('#ficha').change(function() {
                 var id_ficha = $(this).val();
                 if (id_ficha) {
@@ -313,7 +315,8 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                                     aprendiz.Segundo_Apellido +
                                     '</div>' +
                                     '<div class="cell">' + aprendiz.Telefono + '</div>' +
-                                    '<div class="cell"><input type="text" name="observaciones[' + aprendiz.Numero_Documento + ']" placeholder="Añadir observaciones" required></div>' +
+                                    '<div class="cell"><input type="text" name="observaciones[' + aprendiz.ID_Aprendiz + ']" placeholder="Añadir observaciones" required></div>' +
+                                    '<input type="hidden" name="id_aprendiz[]" value="' + aprendiz.ID_Aprendiz + '">' +
                                     '</div>'
                                 );
                             });
@@ -324,10 +327,12 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                 }
             });
 
+
             $('#iniciar-comite').click(function() {
                 var formData = new FormData();
 
                 formData.append('id_ficha', $('#ficha').val());
+                formData.append('Acta', $('#ficha').val());
                 formData.append('nombre', $('#nombre').val());
                 formData.append('fecha', $('#fecha').val());
                 formData.append('horaI', $('#horaI').val());
@@ -338,10 +343,10 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
 
                 // Añadir observaciones de cada aprendiz
                 $('#tabla-aprendices .row:not(.header)').each(function() {
-                    var numDoc = $(this).find('.cell').eq(0).text();
-                    var observacion = $(this).find('input').val();
-                    if (numDoc && observacion) { // Asegurarse de que hay un número de documento y una observación válida
-                        formData.append('observaciones[' + numDoc + ']', observacion);
+                    var id_aprendiz = $(this).find('input[type="hidden"]').val();
+                    var observacion = $(this).find('input[type="text"]').val();
+                    if (id_aprendiz && observacion) { // Asegurarse de que hay un id de aprendiz y una observación válida
+                        formData.append('observaciones[' + id_aprendiz + ']', observacion);
                     }
                 });
 
@@ -369,8 +374,22 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        // Mostrar la respuesta en pantalla para verificar los datos
-                        $('body').append('<div class="resultado">' + response + '</div>');
+                        Swal.fire({
+                            title: 'Éxito',
+                            text: 'Datos guardados exitosamente.',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            window.location.href = "../views/home.php";
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Hubo un problema al guardar los datos.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 });
             });

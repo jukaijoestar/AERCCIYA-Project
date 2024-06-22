@@ -1,36 +1,79 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo "<h2>Datos recibidos:</h2>";
+session_start();
+include("../model/config.php");
 
-    echo "<h3>Información General</h3>";
-    echo "ID Ficha: " . htmlspecialchars($_POST['id_ficha']) . "<br>";
-    echo "Nombre del Comité: " . htmlspecialchars($_POST['nombre']) . "<br>";
-    echo "Fecha: " . htmlspecialchars($_POST['fecha']) . "<br>";
-    echo "Hora Inicio: " . htmlspecialchars($_POST['horaI']) . "<br>";
-    echo "Hora Fin: " . htmlspecialchars($_POST['horaF']) . "<br>";
-    echo "Agendas o Puntos para Desarrollar: " . htmlspecialchars($_POST['puntosD']) . "<br>";
-    echo "Objetivos de la Reunión: " . htmlspecialchars($_POST['objetivos']) . "<br>";
-    echo "Desarrollo de la Reunión: " . htmlspecialchars($_POST['desarrollo']) . "<br>";
+if (!isset($_SESSION['valid'])) {
+    header("Location: ../index.php");
+    exit();
+}
 
-    echo "<h3>Observaciones</h3>";
-    if (isset($_POST['observaciones'])) {
-        foreach ($_POST['observaciones'] as $numDoc => $observacion) {
-            echo "Número de Documento: " . htmlspecialchars($numDoc) . " - Observación: " . htmlspecialchars($observacion) . "<br>";
-        }
+header('Content-Type: application/json');
+
+try {
+    $pdo = new PDO('mysql:host=localhost;dbname=comite_sena', 'root', '');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo json_encode(["status" => "error", "message" => "Error de conexión: " . $e->getMessage()]);
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $acta_num = $_POST['Acta'];
+    $nombre = $_POST['nombre'];
+    $fecha = $_POST['fecha'];
+    $hora_inicio = $_POST['horaI'];
+    $hora_fin = $_POST['horaF'];
+    $agendas = $_POST['puntosD'];
+    $objetivo = $_POST['objetivos'];
+    $desarrollo = $_POST['desarrollo'];
+    $id_ficha = $_POST['id_ficha'];
+
+    // Guardar el archivo de asistentes
+    $ruta_foto = '';
+    if (isset($_FILES['asistentes']) && $_FILES['asistentes']['error'] == UPLOAD_ERR_OK) {
+        $ruta_foto = '../uploads/' . basename($_FILES['asistentes']['name']);
+        move_uploaded_file($_FILES['asistentes']['tmp_name'], $ruta_foto);
     }
 
-    echo "<h3>Compromisos</h3>";
-    if (isset($_POST['actividad'])) {
-        foreach ($_POST['actividad'] as $index => $actividad) {
-            echo "Actividad: " . htmlspecialchars($actividad) . "<br>";
-            echo "Responsable: " . htmlspecialchars($_POST['responsable'][$index]) . "<br>";
-            echo "Fecha: " . htmlspecialchars($_POST['fecha_compromiso'][$index]) . "<br><br>";
-        }
-    }
+    try {
+        $pdo->beginTransaction();
 
-    echo "<h3>Asistentes</h3>";
-    if (isset($_FILES['asistentes'])) {
-        echo "Archivo Asistentes: " . htmlspecialchars($_FILES['asistentes']['name']) . "<br>";
+        // Insertar en comite_extraordinario
+        $stmt = $pdo->prepare("INSERT INTO comite_extraordinario (Acta_Num, Nombre, Fecha, Hora_inicio, Hora_fin, Agendas, Objetivo, Desarrollo, Actividad, Responsable, ruta_foto, ID_ficha) VALUES (:acta_num, :nombre, :fecha, :hora_inicio, :hora_fin, :agendas, :objetivo, :desarrollo, :actividad, :responsable, :ruta_foto, :id_ficha)");
+        $stmt->execute([
+            'acta_num' => $acta_num,
+            'nombre' => $nombre,
+            'fecha' => $fecha,
+            'hora_inicio' => $hora_inicio,
+            'hora_fin' => $hora_fin,
+            'agendas' => $agendas,
+            'objetivo' => $objetivo,
+            'desarrollo' => $desarrollo,
+            'actividad' => implode(', ', $_POST['actividad']),
+            'responsable' => implode(', ', $_POST['responsable']),
+            'ruta_foto' => $ruta_foto,
+            'id_ficha' => $id_ficha
+        ]);
+
+        $id_extraordinario = $pdo->lastInsertId();
+
+        // Insertar observaciones
+        if (isset($_POST['observaciones']) && is_array($_POST['observaciones'])) {
+            $stmt = $pdo->prepare("INSERT INTO observaciones (Contenido, ID_Aprendiz, ID_extraordinario) VALUES (:contenido, :id_aprendiz, :id_extraordinario)");
+            foreach ($_POST['observaciones'] as $id_aprendiz => $contenido) {
+                $stmt->execute([
+                    'contenido' => $contenido,
+                    'id_aprendiz' => $id_aprendiz,
+                    'id_extraordinario' => $id_extraordinario
+                ]);
+            }
+        }
+
+        $pdo->commit();
+        echo json_encode(["status" => "success", "message" => "Datos guardados exitosamente."]);
+    } catch (PDOException $e) {
+        $pdo->rollBack();
+        echo json_encode(["status" => "error", "message" => "Error al guardar los datos: " . $e->getMessage()]);
     }
 }
 ?>
