@@ -15,7 +15,7 @@ $res_Email = isset($_SESSION['valid']) ? $_SESSION['valid'] : 'email@desconocido
 
         <ul class="menu-item">
             <li class="item">
-                <a href="home.php" class="title">Dashboard</a>
+                <a href="home.php" class="title">Inicio</a>
             </li>
             <li class="item">
                 <a class="title" id="Dashboard">Listas</a>

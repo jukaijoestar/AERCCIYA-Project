@@ -14,7 +14,7 @@
         <nav>
             <h1>Servicio Nacional de Aprendizaje</h1>
         </nav>
-        <a class="login" href="index.php">Ingresa<i class="ph ph-sign-in"></i></a>
+        <a class="login" href="index.php">Ingresar<i class="ph ph-sign-in"></i></a>
     </header>
     
     <section>
