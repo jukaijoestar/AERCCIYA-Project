@@ -1,6 +1,6 @@
 {
     "require": {
         "phpoffice/phpspreadsheet": "^1.17",
-        "phpoffice/phpword": "^1.2.0"
+        "phpoffice/phpword": "^1.2"
     }
 }

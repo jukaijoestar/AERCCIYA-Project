@@ -70,10 +70,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $pdo->commit();
-        echo json_encode(["status" => "success", "message" => "Datos guardados exitosamente."]);
+        echo json_encode(["status" => "success", "id" => $id_extraordinario, "message" => "Datos guardados exitosamente."]);
     } catch (PDOException $e) {
         $pdo->rollBack();
         echo json_encode(["status" => "error", "message" => "Error al guardar los datos: " . $e->getMessage()]);
     }
+} else {
+    echo json_encode(["status" => "error", "message" => "Método de solicitud no válido."]);
 }
 ?>

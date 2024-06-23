@@ -397,14 +397,30 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        Swal.fire({
-                            title: 'Éxito',
-                            text: 'Datos guardados exitosamente.',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(() => {
-                            window.location.href = "../views/home.php";
-                        });
+                        // Asumimos que response ya es un objeto JSON porque configuramos el encabezado en PHP
+                        if (response.status === "success") {
+                            Swal.fire({
+                                title: 'Éxito',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                // Redirigir a consultar.php con el ID obtenido
+                                window.location.href = "../controllers/consultar.php?id=" + response.id;
+
+                                // Esperar 1 segundo antes de redirigir a home.php
+                                setTimeout(() => {
+                                    window.location.href = "../views/home.php";
+                                }, 1000);
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
                     },
                     error: function(xhr, status, error) {
                         Swal.fire({
@@ -415,8 +431,10 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                         });
                     }
                 });
+
             });
         });
     </script>
 </body>
+
 </html>
