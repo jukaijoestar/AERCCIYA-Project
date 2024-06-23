@@ -99,7 +99,7 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                 <form id="filtro-fichas" method="post">
                     <div>
                         <label for="Acta">Número del acta:</label>
-                        <input type="text" id="Acta" name="Acta" value="Acta " required>
+                        <input type="Number" id="Acta" name="Acta" required>
                     </div>
                     <div>
                         <label for="regional">Regional:</label>
@@ -355,7 +355,7 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                 var formData = new FormData();
 
                 formData.append('id_ficha', $('#ficha').val());
-                formData.append('Acta', $('#ficha').val());
+                formData.append('Acta', $('#Acta').val());
                 formData.append('nombre', $('#nombre').val());
                 formData.append('fecha', $('#fecha').val());
                 formData.append('horaI', $('#horaI').val());
