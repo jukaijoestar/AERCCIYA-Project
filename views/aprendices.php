@@ -62,26 +62,34 @@ if (isset($_GET['id_ficha'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr class='fila' data-id-aprendiz='{$row['ID_Aprendiz']}' data-tipo-documento='{$row['Tipo_Documento']}' data-numero-documento='{$row['Numero_Documento']}' data-nombre-completo='{$row['Primer_Nombre']} {$row['Segundo_Nombre']} {$row['Primer_Apellido']} {$row['Segundo_Apellido']}' data-email='{$row['Email']}' data-telefono='{$row['Telefono']}' data-tipo-documento='{$row['Tipo_Documento']}'>
-                                <td>{$row['Tipo_Documento']}</td>
-                                <td>{$row['Numero_Documento']}</td>
-                                <td>{$row['Primer_Nombre']} {$row['Segundo_Nombre']} {$row['Primer_Apellido']} {$row['Segundo_Apellido']}</td>
-                                <td>{$row['Email']}</td>
-                                <td>{$row['Telefono']}</td>
-                                <td>
-                                    <button class='btn btn-primary abrir-comite' data-id='{$row['ID_Aprendiz']}' data-documento='{$row['Numero_Documento']}'>Abrir Comité</button>
-                                     <a href='lista_comite.php?id_aprendiz={$row['ID_Aprendiz']}' class='btn btn-secondary'>Ver Comités</a>
-                                </td>
-                              </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='6'>No hay aprendices disponibles para esta ficha</td></tr>";
-                }
-                ?>
-            </tbody>
+    <?php
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr class='fila' data-id-aprendiz='{$row['ID_Aprendiz']}' data-tipo-documento='{$row['Tipo_Documento']}' data-numero-documento='{$row['Numero_Documento']}' data-nombre-completo='{$row['Primer_Nombre']} {$row['Segundo_Nombre']} {$row['Primer_Apellido']} {$row['Segundo_Apellido']}' data-email='{$row['Email']}' data-telefono='{$row['Telefono']}' data-tipo-documento='{$row['Tipo_Documento']}'>
+                    <td>{$row['Tipo_Documento']}</td>
+                    <td>{$row['Numero_Documento']}</td>
+                    <td>{$row['Primer_Nombre']} {$row['Segundo_Nombre']} {$row['Primer_Apellido']} {$row['Segundo_Apellido']}</td>
+                    <td>{$row['Email']}</td>
+                    <td>{$row['Telefono']}</td>
+                    <td>
+                        <select class='form-select abrir-comite' data-id='{$row['ID_Aprendiz']}' data-documento='{$row['Numero_Documento']}'>
+                            <option value='' disabled selected>Abrir Comité</option>
+                            <option value='1'>Comité 1</option>
+                            <option value='2'>Comité 2</option>
+                            <option value='3'>Comité 3</option>
+                            <option value='4'>Comité 4</option>
+                            <option value='5'>Comité 5</option>
+                            <option value='6'>Comité 6</option>
+                        </select>
+                         <a href='lista_comite.php?id_aprendiz={$row['ID_Aprendiz']}' class='btn btn-secondary'>Ver Comités</a>
+                    </td>
+                  </tr>";
+        }
+    } else {
+        echo "<tr><td colspan='6'>No hay aprendices disponibles para esta ficha</td></tr>";
+    }
+    ?>
+</tbody>
         </table>
     </section>
 
@@ -220,17 +228,7 @@ if (isset($_GET['id_ficha'])) {
                     <textarea class="form-control" id="descripcionComite" name="descripcionComite" rows="10" required></textarea>
                 </div>
                 <input type="hidden" id="idAprendizComite" name="idAprendizComite">
-                <div class="input-modal">
-                    <label>Seleccionar Comité</label>
-                    <div>
-                        <button type="button" class="btn btn-secondary comite-btn" data-comite="1">Comité 1</button>
-                        <button type="button" class="btn btn-secondary comite-btn" data-comite="2">Comité 2</button>
-                        <button type="button" class="btn btn-secondary comite-btn" data-comite="3">Comité 3</button>
-                        <button type="button" class="btn btn-secondary comite-btn" data-comite="4">Comité 4</button>
-                        <button type="button" class="btn btn-secondary comite-btn" data-comite="5">Comité 5</button>
-                        <button type="button" class="btn btn-secondary comite-btn" data-comite="6">Comité 6</button>
-                    </div>
-                </div>
+ 
                 <div class="input-modal">
                     <label id="comentariosLabel"></label>
                 </div>
@@ -250,7 +248,7 @@ if (isset($_GET['id_ficha'])) {
 
     
 
-    <script>
+ <script>
 document.addEventListener('DOMContentLoaded', function () {
         const addAprendizModal = document.getElementById("addAprendizModal");
         const openAddAprendizModal = document.getElementById("openAddAprendizModal");
@@ -493,46 +491,76 @@ document.getElementById('comiteAprendizForm').addEventListener('submit', functio
         }
 
         // Modal Comité
-        const comiteModal = document.getElementById("comiteModal");
-        const closeComiteModal = comiteModal.querySelector(".close");
+    const comiteModal = document.getElementById("comiteModal");
+    const closeComiteModal = comiteModal.querySelector(".close");
 
-        document.querySelectorAll(".abrir-comite").forEach(button => {
-            button.addEventListener("click", () => {
-                const idAprendiz = button.getAttribute("data-id");
-                const documentoAprendiz = button.getAttribute("data-documento");
+    document.querySelectorAll(".abrir-comite").forEach(select => {
+        select.addEventListener("change", function() {
+            const comiteNumber = this.value;
+            const idAprendiz = this.getAttribute("data-id");
+            const documentoAprendiz = this.getAttribute("data-documento");
 
-                document.getElementById("documentoComite").value = documentoAprendiz;
-                document.getElementById("idAprendizComite").value = idAprendiz;
+            document.getElementById("documentoComite").value = documentoAprendiz;
+            document.getElementById("idAprendizComite").value = idAprendiz;
+            document.getElementById("comentariosLabel").innerText = 'Seleccionaste el Comité' + $comiteNumber;
 
-                comiteModal.style.display = "block";
-            });
+            comiteModal.style.display = "block";
         });
+    });
 
-        closeComiteModal.onclick = function() {
+    closeComiteModal.onclick = function() {
+        comiteModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == comiteModal) {
             comiteModal.style.display = "none";
         }
+    }
 
-        window.onclick = function(event) {
-            if (event.target == comiteModal) {
-                comiteModal.style.display = "none";
+    // Formulario de agregar comité
+    document.getElementById('comiteAprendizForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        formData.append('id_ficha', <?php echo $id_ficha; ?>);
+        
+        var numComite = document.querySelector('.abrir-comite option:checked').value;
+        formData.append('num_comite', numComite);
+
+        fetch('../controllers/agregar_comite.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: 'Comité guardado correctamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setTimeout(function() {
+                    location.reload();
+                }, 1500);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un problema al realizar la operación: ' + data.message
+                });
             }
-        }
-
-        // Manejo de los botones de selección de comité
-        document.querySelectorAll('.comite-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const comiteNumber = this.getAttribute('data-comite');
-                document.getElementById('comentariosLabel').innerText = `Seleccionaste el Comité ${comiteNumber}`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ocurrió un error al procesar la solicitud.'
             });
         });
-
-       
-
-        window.onclick = function(event) {
-            if (event.target == viewAprendizModal) {
-                viewAprendizModal.style.display = "none";
-            }
-        }
+    });
     });
 
     
@@ -669,7 +697,7 @@ function actualizarListaAprendices() {
             if (data.error) {
                 console.error('Error al obtener los datos:', data.error);
                 // Manejar el error si ocurre alguno
-                tableBody.innerHTML = `<tr><td colspan="6">${data.error}</td></tr>`;
+                tableBody.innerHTML = <tr><td colspan="6">${data.error}</td></tr>;
             } else {
                 // Iterar sobre los aprendices y agregar filas a la tabla
                 data.aprendices.forEach(aprendiz => {
@@ -693,9 +721,11 @@ function actualizarListaAprendices() {
             console.error('Error al obtener la lista de aprendices:', error);
             // Manejar el error si la solicitud fetch falla
             const tableBody = document.querySelector('table tbody');
-            tableBody.innerHTML = `<tr><td colspan="6">Error al obtener la lista de aprendices.</td></tr>`;
+            tableBody.innerHTML = <tr><td colspan="6">Error al obtener la lista de aprendices.</td></tr>;
         });
 }
+
+
 </script>
 </body>
 

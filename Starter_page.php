@@ -47,10 +47,6 @@
           </form>
 
           <form action="" method="post" class="sign-up-form">
-            <!-- <div class="logo">
-            <img src="static/img/Sena.png" alt="sena" />
-              <h4>SENA</h4>
-            </div> -->
 
             <div class="heading">
               <h1>Empezar</h1>

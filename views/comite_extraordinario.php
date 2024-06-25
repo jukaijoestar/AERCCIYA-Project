@@ -193,6 +193,7 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                                     <div class="cell">Aprendiz</div>
                                     <div class="cell">Telefono</div>
                                     <div class="cell">Observaciones</div>
+                                    <div class="cell">Anotaciones</div>
                                 </div>
                                 <div class="row"></div> <!-- Filas llenadas dinámicamente por JavaScript -->
                             </div>
@@ -340,6 +341,14 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                                     '</div>' +
                                     '<div class="cell">' + aprendiz.Telefono + '</div>' +
                                     '<div class="cell"><input type="text" name="observaciones[' + aprendiz.ID_Aprendiz + ']" placeholder="Añadir observaciones" required></div>' +
+                                    '<div class="cell">' +
+                                    '<select name="accion[' + aprendiz.ID_Aprendiz + ']">' +
+                                    '<option value="ninguno">Ningúno</option>' +
+                                    '<option value="reconocimiento">Reconocimiento</option>' +
+                                    '<option value="remision">Remisión a psicología</option>' +
+                                    '<option value="llamado">Llamado de atención</option>' +
+                                    '</select>' +
+                                    '</div>' +
                                     '<input type="hidden" name="id_aprendiz[]" value="' + aprendiz.ID_Aprendiz + '">' +
                                     '</div>'
                                 );
@@ -350,6 +359,7 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                     $('#tabla-aprendices .row:not(.header)').remove();
                 }
             });
+
 
             $('#iniciar-comite').click(function() {
                 var formData = new FormData();

@@ -12,7 +12,8 @@ if (isset($_POST['login_submit'])) {
     $row = mysqli_fetch_assoc($result);
     
     if ($row) {
-        if (password_verify($password, $row['Password'])) {
+        // Comparar la contraseña directamente (esto es inseguro)
+        if ($password == $row['Password']) {
             $_SESSION['valid'] = $row['Email'];
             $_SESSION['username'] = $row['Username'];
             $_SESSION['age'] = $row['Age'];

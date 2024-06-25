@@ -51,7 +51,7 @@ if (
 
     // Plantilla de Word
     $templateFile = '../static/templates/Acta_Comite_extraordinario_Template.docx';
-    $outputFile = 'Comite Extraordinario ' . $id_extraordinario . '.docx';
+    $outputFile = $nombre . '.docx';
 
     // Crear un objeto TemplateProcessor
     $templateProcessor = new TemplateProcessor($templateFile);
