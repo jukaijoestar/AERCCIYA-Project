@@ -69,6 +69,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
+        // Insertar anotaciones
+        if (isset($_POST['accion']) && is_array($_POST['accion'])) {
+            $stmt = $pdo->prepare("INSERT INTO anotaciones (A_Contenido, ID_Aprendiz, ID_extraordinario) VALUES (:contenido, :id_aprendiz, :id_extraordinario)");
+            foreach ($_POST['accion'] as $id_aprendiz => $contenido) {
+                $stmt->execute([
+                    'contenido' => $contenido,
+                    'id_aprendiz' => $id_aprendiz,
+                    'id_extraordinario' => $id_extraordinario
+                ]);
+            }
+        }
+
         $pdo->commit();
         echo json_encode(["status" => "success", "id" => $id_extraordinario, "message" => "Datos guardados exitosamente."]);
     } catch (PDOException $e) {

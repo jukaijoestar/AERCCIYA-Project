@@ -2,13 +2,15 @@
 require_once '../vendor/autoload.php';
 use PhpOffice\PhpWord\TemplateProcessor;
 
-// Verificar si se recibieron los datos del comité extraordinario y observaciones
+// Verificar si se recibieron los datos del comité extraordinario, observaciones y anotaciones
 if (
     isset($_GET['id']) && isset($_GET['acta_num']) && isset($_GET['nombre']) &&
     isset($_GET['fecha']) && isset($_GET['hora_inicio']) && isset($_GET['hora_fin']) &&
     isset($_GET['agendas']) && isset($_GET['objetivo']) && isset($_GET['desarrollo']) &&
     isset($_GET['responsable']) && isset($_GET['tipo_documento']) && isset($_GET['numero_documento']) &&
-    isset($_GET['nombre_completo']) && isset($_GET['apellido_completo']) && isset($_GET['contenido'])
+    isset($_GET['nombre_completo']) && isset($_GET['apellido_completo']) && isset($_GET['contenido']) &&
+    isset($_GET['anotaciones_tipo_documento']) && isset($_GET['anotaciones_numero_documento']) &&
+    isset($_GET['anotaciones_nombre_completo']) && isset($_GET['anotaciones_apellido_completo']) && isset($_GET['anotaciones_contenido'])
 ) {
     // Obtener los datos del GET
     $id_extraordinario = $_GET['id'];
@@ -27,6 +29,12 @@ if (
     $apellido_completo = explode(",", $_GET['apellido_completo']);
     $contenido = explode(",", $_GET['contenido']);
 
+    $anotaciones_tipo_documento = explode(",", $_GET['anotaciones_tipo_documento']);
+    $anotaciones_numero_documento = explode(",", $_GET['anotaciones_numero_documento']);
+    $anotaciones_nombre_completo = explode(",", $_GET['anotaciones_nombre_completo']);
+    $anotaciones_apellido_completo = explode(",", $_GET['anotaciones_apellido_completo']);
+    $anotaciones_contenido = explode(",", $_GET['anotaciones_contenido']);
+
     // Función para limpiar y decodificar en UTF-8
     function cleanAndDecode($data) {
         return array_map('utf8_decode', array_map('urldecode', $data));
@@ -37,6 +45,12 @@ if (
     $nombre_completo = cleanAndDecode($nombre_completo);
     $apellido_completo = cleanAndDecode($apellido_completo);
     $contenido = cleanAndDecode($contenido);
+
+    $anotaciones_tipo_documento = cleanAndDecode($anotaciones_tipo_documento);
+    $anotaciones_numero_documento = cleanAndDecode($anotaciones_numero_documento);
+    $anotaciones_nombre_completo = cleanAndDecode($anotaciones_nombre_completo);
+    $anotaciones_apellido_completo = cleanAndDecode($anotaciones_apellido_completo);
+    $anotaciones_contenido = cleanAndDecode($anotaciones_contenido);
 
     // Formatear la fecha
     $fecha_formateada = date('j', strtotime($fecha)) . ' de ';
@@ -78,6 +92,30 @@ if (
         $templateProcessor->setValue("Ap_Comp#{$row_index}", utf8_encode($apellido_completo[$i]));
         $templateProcessor->setValue("Contenido#{$row_index}", utf8_encode($contenido[$i]));
     }
+
+    // Filtrar y clasificar anotaciones
+    $reconocimientos = [];
+    $remisiones = [];
+    $llamados = [];
+    for ($i = 0; $i < count($anotaciones_contenido); $i++) {
+        $nombre_completo_aprendiz = utf8_encode($anotaciones_nombre_completo[$i]) . ' ' . utf8_encode($anotaciones_apellido_completo[$i]);
+        switch (strtolower($anotaciones_contenido[$i])) {
+            case 'reconocimiento':
+                $reconocimientos[] = $nombre_completo_aprendiz;
+                break;
+            case 'remision':
+                $remisiones[] = $nombre_completo_aprendiz . " (Remisión a orientación psicológica)";
+                break;
+            case 'llamado':
+                $llamados[] = $nombre_completo_aprendiz;
+                break;
+        }
+    }
+
+    // Asignar valores de anotaciones a la plantilla
+    $templateProcessor->setValue('reconocimientos', implode(', ', $reconocimientos));
+    $templateProcessor->setValue('remisiones', implode(', ', $remisiones));
+    $templateProcessor->setValue('llamados', implode(', ', $llamados));
 
     // Guardar el documento generado
     $templateProcessor->saveAs($outputFile);

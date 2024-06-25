@@ -210,7 +210,7 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                                         <input type="text" id="responsable" name="responsable[]">
                                     </div>
                                     <div>
-                                        <label for="horaF">Hora Fin (Opcional):</label>
+                                        <label for="horaF">Hora Fin:</label>
                                         <input type="time" id="horaF" name="horaF">
                                     </div>
                                 </div>
@@ -374,12 +374,15 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                 formData.append('objetivos', $('#objetivos').val());
                 formData.append('desarrollo', $('#desarrollo').val());
 
-                // Añadir observaciones de cada aprendiz
+                // Añadir observaciones y anotaciones de cada aprendiz
                 $('#tabla-aprendices .row:not(.header)').each(function() {
                     var id_aprendiz = $(this).find('input[type="hidden"]').val();
                     var observacion = $(this).find('input[type="text"]').val();
-                    if (id_aprendiz && observacion) { // Asegurarse de que hay un id de aprendiz y una observación válida
+                    var accion = $(this).find('select').val();
+
+                    if (id_aprendiz) { // Asegurarse de que hay un id de aprendiz
                         formData.append('observaciones[' + id_aprendiz + ']', observacion);
+                        formData.append('accion[' + id_aprendiz + ']', accion);
                     }
                 });
 
@@ -441,7 +444,6 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                         });
                     }
                 });
-
             });
         });
     </script>
