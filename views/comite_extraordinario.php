@@ -141,15 +141,19 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
                             <div class="form-columna-fechas">
                                 <div>
                                     <label for="puntosD">Agendas o Puntos para Desarrollar:</label>
-                                    <textarea id="puntosD" name="puntosD" rows="3" required></textarea>
+                                    <textarea id="puntosD" name="puntosD" rows="2" required></textarea>
                                 </div>
                                 <div>
                                     <label for="objetivos">Objetivos de la Reunión:</label>
-                                    <textarea id="objetivos" name="objetivos" rows="3" required></textarea>
+                                    <textarea id="objetivos" name="objetivos" rows="2" required></textarea>
                                 </div>
                                 <div>
                                     <label for="desarrollo">Desarrollo de la Reunión:</label>
-                                    <textarea id="desarrollo" name="desarrollo" rows="3" required></textarea>
+                                    <textarea id="desarrollo" name="desarrollo" rows="2" required></textarea>
+                                </div>
+                                <div>
+                                    <label for="Integrantes">Integrantes de la Reunión:</label>
+                                    <textarea id="Integrantes" name="Integrantes" rows="2" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -199,5 +203,4 @@ $modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FE
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="../static/js/comite_extraordinario.js"></script>
 </body>
-
 </html>

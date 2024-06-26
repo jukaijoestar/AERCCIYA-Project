@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $objetivo = $_POST['objetivos'];
     $desarrollo = $_POST['desarrollo'];
     $id_ficha = $_POST['id_ficha'];
+    $integrantes = $_POST['integrantes']; // Nuevo campo para integrantes
 
     // Guardar el archivo de asistentes
     $ruta_foto = '';
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $pdo->beginTransaction();
 
         // Insertar en comite_extraordinario
-        $stmt = $pdo->prepare("INSERT INTO comite_extraordinario (Acta_Num, Nombre, Fecha, Hora_inicio, Hora_fin, Agendas, Objetivo, Desarrollo, Actividad, Responsable, ruta_foto, ID_ficha) VALUES (:acta_num, :nombre, :fecha, :hora_inicio, :hora_fin, :agendas, :objetivo, :desarrollo, :actividad, :responsable, :ruta_foto, :id_ficha)");
+        $stmt = $pdo->prepare("INSERT INTO comite_extraordinario (Acta_Num, Nombre, Fecha, Hora_inicio, Hora_fin, Agendas, Objetivo, Desarrollo, Actividad, Responsable, ruta_foto, ID_ficha, Integrantes) VALUES (:acta_num, :nombre, :fecha, :hora_inicio, :hora_fin, :agendas, :objetivo, :desarrollo, :actividad, :responsable, :ruta_foto, :id_ficha, :integrantes)");
         $stmt->execute([
             'acta_num' => $acta_num,
             'nombre' => $nombre,
@@ -44,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'actividad' => implode(', ', $_POST['actividad']),
             'responsable' => implode(', ', $_POST['responsable']),
             'ruta_foto' => $ruta_foto,
-            'id_ficha' => $id_ficha
+            'id_ficha' => $id_ficha,
+            'integrantes' => $integrantes // Agregar el campo de integrantes aquí
         ]);
 
         $id_extraordinario = $pdo->lastInsertId();

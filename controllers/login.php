@@ -2,30 +2,34 @@
 include("model/config.php");
 
 if (isset($_POST['login_submit'])) {
-    $email = mysqli_real_escape_string($con, $_POST['login_email']);
-    $password = mysqli_real_escape_string($con, $_POST['login_password']);
+    $email = $_POST['login_email'];
+    $password = $_POST['login_password'];
     
-    $stmt = mysqli_prepare($con, "SELECT * FROM users WHERE Email = ?");
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $row = mysqli_fetch_assoc($result);
-    
-    if ($row) {
-        // Comparar la contraseña directamente (esto es inseguro)
-        if ($password == $row['Password']) {
-            $_SESSION['valid'] = $row['Email'];
-            $_SESSION['username'] = $row['Username'];
-            $_SESSION['age'] = $row['Age'];
-            $_SESSION['id'] = $row['Id'];  
+    try {
+        $query = "SELECT * FROM users WHERE Email = ?";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row) {
+            // Comparar la contraseña directamente (menos seguro)
+            if ($password == $row['Password']) {
+                session_start();
+                $_SESSION['valid'] = $row['Email'];
+                $_SESSION['username'] = $row['Username'];
+                $_SESSION['age'] = $row['Age'];
+                $_SESSION['id'] = $row['Id'];  
 
-            header("Location: ../views/home.php");
-            exit();
+                header("Location: ../views/home.php");
+                exit();
+            } else {
+                echo "<script>Swal.fire('Error', 'Contraseña incorrecta', 'error');</script>";
+            }
         } else {
-            echo "<script>Swal.fire('Error', 'Contraseña incorrecta', 'error');</script>";
+            echo "<script>Swal.fire('Error', 'Correo electrónico incorrecto', 'error');</script>";
         }
-    } else {
-        echo "<script>Swal.fire('Error', 'Correo electrónico incorrecto', 'error');</script>";
+    } catch (PDOException $e) {
+        echo "Error de conexión: " . $e->getMessage();
     }
 }
 ?>

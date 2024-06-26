@@ -18,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $segundoApellido = $_POST['segundoApellido'];
     $email = $_POST['email'];
     $telefono = $_POST['telefono'];
-    $id_ficha = $_POST['id_ficha']; // Obtener el ID de la ficha desde el formulario POST
+    $id_ficha = $_POST['id_ficha'];
+    $integrantes = $_POST['Integrantes'];
 
     // Procesar la imagen si se subió correctamente
     if (!empty($_FILES['imagen']['name'])) {

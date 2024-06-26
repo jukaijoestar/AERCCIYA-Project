@@ -26,6 +26,9 @@ if (isset($_GET['id'])) {
             $objetivo = $row['Objetivo'];
             $desarrollo = $row['Desarrollo'];
             $responsable = $row['Responsable'];
+            $integrantes = $row['Integrantes'];
+            $actividad = $row['Actividad'];
+            $fecha_actividad = $row['Fecha_Actividad'];
 
             // Consulta para obtener las observaciones relacionadas
             $sql_observaciones = "SELECT o.Contenido, a.Tipo_Documento, a.Numero_Documento, a.Primer_Nombre, a.Segundo_Nombre, a.Primer_Apellido, a.Segundo_Apellido
@@ -108,7 +111,7 @@ if (isset($_GET['id'])) {
             $anotaciones_apellido_completo_encoded = implode(",", array_map('urlencode', $anotaciones_apellido_completo));
             $anotaciones_contenido_encoded = implode(",", array_map('urlencode', $anotaciones_contenido));
 
-            header("Location: exportar.php?id=$id_extraordinario&acta_num=$acta_num&nombre=$nombre&fecha=$fecha&hora_inicio=$hora_inicio&hora_fin=$hora_fin&agendas=$agendas&objetivo=$objetivo&desarrollo=$desarrollo&responsable=$responsable&tipo_documento=$observaciones_tipo_documento_encoded&numero_documento=$observaciones_numero_documento_encoded&nombre_completo=$observaciones_nombre_completo_encoded&apellido_completo=$observaciones_apellido_completo_encoded&contenido=$observaciones_contenido_encoded&anotaciones_tipo_documento=$anotaciones_tipo_documento_encoded&anotaciones_numero_documento=$anotaciones_numero_documento_encoded&anotaciones_nombre_completo=$anotaciones_nombre_completo_encoded&anotaciones_apellido_completo=$anotaciones_apellido_completo_encoded&anotaciones_contenido=$anotaciones_contenido_encoded");
+            header("Location: exportar.php?id=$id_extraordinario&acta_num=$acta_num&fecha_actividad=$fecha_actividad&integrantes=$integrantes&nombre=$nombre&fecha=$fecha&hora_inicio=$hora_inicio&hora_fin=$hora_fin&agendas=$agendas&objetivo=$objetivo&desarrollo=$desarrollo&responsable=$responsable&tipo_documento=$observaciones_tipo_documento_encoded&numero_documento=$observaciones_numero_documento_encoded&nombre_completo=$observaciones_nombre_completo_encoded&apellido_completo=$observaciones_apellido_completo_encoded&contenido=$observaciones_contenido_encoded&anotaciones_tipo_documento=$anotaciones_tipo_documento_encoded&anotaciones_numero_documento=$anotaciones_numero_documento_encoded&anotaciones_nombre_completo=$anotaciones_nombre_completo_encoded&anotaciones_apellido_completo=$anotaciones_apellido_completo_encoded&anotaciones_contenido=$anotaciones_contenido_encoded");
             exit;
         } else {
             echo "No se encontraron datos para el ID proporcionado.";

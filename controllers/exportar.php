@@ -1,12 +1,13 @@
 <?php
 require_once '../vendor/autoload.php';
+
 use PhpOffice\PhpWord\TemplateProcessor;
 
 // Verificar si se recibieron los datos del comité extraordinario, observaciones y anotaciones
 if (
     isset($_GET['id']) && isset($_GET['acta_num']) && isset($_GET['nombre']) &&
-    isset($_GET['fecha']) && isset($_GET['hora_inicio']) && isset($_GET['hora_fin']) &&
-    isset($_GET['agendas']) && isset($_GET['objetivo']) && isset($_GET['desarrollo']) &&
+    isset($_GET['fecha']) && isset($_GET['fecha_actividad']) && isset($_GET['hora_inicio']) && isset($_GET['hora_fin']) &&
+    isset($_GET['agendas']) && isset($_GET['objetivo']) && isset($_GET['desarrollo']) && isset($_GET['integrantes']) &&
     isset($_GET['responsable']) && isset($_GET['tipo_documento']) && isset($_GET['numero_documento']) &&
     isset($_GET['nombre_completo']) && isset($_GET['apellido_completo']) && isset($_GET['contenido']) &&
     isset($_GET['anotaciones_tipo_documento']) && isset($_GET['anotaciones_numero_documento']) &&
@@ -22,12 +23,14 @@ if (
     $agendas = $_GET['agendas'];
     $objetivo = $_GET['objetivo'];
     $desarrollo = $_GET['desarrollo'];
+    $integrantes = $_GET['integrantes'];
     $responsable = $_GET['responsable'];
     $tipo_documento = explode(",", $_GET['tipo_documento']);
     $numero_documento = explode(",", $_GET['numero_documento']);
     $nombre_completo = explode(",", $_GET['nombre_completo']);
     $apellido_completo = explode(",", $_GET['apellido_completo']);
     $contenido = explode(",", $_GET['contenido']);
+    $fecha_actividad = $_GET['fecha_actividad'];
 
     $anotaciones_tipo_documento = explode(",", $_GET['anotaciones_tipo_documento']);
     $anotaciones_numero_documento = explode(",", $_GET['anotaciones_numero_documento']);
@@ -36,13 +39,15 @@ if (
     $anotaciones_contenido = explode(",", $_GET['anotaciones_contenido']);
 
     // Función para limpiar y decodificar en UTF-8
-    function cleanAndDecode($data) {
+    function cleanAndDecode($data)
+    {
         return array_map('urldecode', $data);
     }
 
     // Asegurar que los datos estén en UTF-8
-    function ensureUtf8($data) {
-        return array_map(function($item) {
+    function ensureUtf8($data)
+    {
+        return array_map(function ($item) {
             return mb_convert_encoding($item, 'UTF-8', 'auto');
         }, $data);
     }
@@ -80,6 +85,12 @@ if (
     $fecha_formateada .= $meses[$mes - 1] . ' del ';
     $fecha_formateada .= date('Y', strtotime($fecha));
 
+    // Formatear la fecha de Fecha_Actividad
+    $fecha_actividad_formateada = date('j', strtotime($fecha_actividad)) . ' de ';
+    $mes_actividad = date('n', strtotime($fecha_actividad));
+    $fecha_actividad_formateada .= $meses[$mes_actividad - 1] . ' del ';
+    $fecha_actividad_formateada .= date('Y', strtotime($fecha_actividad));
+
     // Formatear la hora a formato am/pm
     $hora_inicio_formateada = date('h:i A', strtotime($hora_inicio));
     $hora_fin_formateada = date('h:i A', strtotime($hora_fin));
@@ -99,6 +110,7 @@ if (
     $templateProcessor->setValue('Agendas', $agendas);
     $templateProcessor->setValue('Objetivo', $objetivo);
     $templateProcessor->setValue('Desarrollo', $desarrollo);
+    $templateProcessor->setValue('Integrantes', $integrantes);
     $templateProcessor->setValue('Responsable', $responsable);
 
     // Añadir filas a la tabla de observaciones
@@ -144,7 +156,7 @@ if (
     // Enviar el archivo al navegador para su descarga
     header('Content-Description: File Transfer');
     header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-    header('Content-Disposition: attachment; filename="'.basename($nombre . '.docx').'"');
+    header('Content-Disposition: attachment; filename="' . basename($nombre . '.docx') . '"');
     header('Content-Transfer-Encoding: binary');
     header('Expires: 0');
     header('Cache-Control: must-revalidate');
@@ -158,4 +170,3 @@ if (
 } else {
     echo "No se recibieron todos los datos necesarios para generar el documento.";
 }
-?>

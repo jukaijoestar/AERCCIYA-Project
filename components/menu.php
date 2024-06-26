@@ -31,11 +31,11 @@ $res_Email = isset($_SESSION['valid']) ? $_SESSION['valid'] : 'email@desconocido
                             </a>
                         </li>
                         <li class="enlaces">
-                            <a href="lista_comite.php" class="link">
+                            <a href="Lista_Actas.php" class="link">
                                 <img src="../static/img/comite.png" alt="">
                                 <div>
-                                    <span class="subtitle">Comité</span>
-                                    <span class="subconte">Manejo de comités</span>
+                                    <span class="subtitle">Actas</span>
+                                    <span class="subconte">Descarga todas las actas realizadas</span>
                                 </div>
                             </a>
                         </li>

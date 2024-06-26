@@ -160,6 +160,7 @@ $(document).ready(function () {
     formData.append("puntosD", $("#puntosD").val());
     formData.append("objetivos", $("#objetivos").val());
     formData.append("desarrollo", $("#desarrollo").val());
+    formData.append("integrantes", $("#Integrantes").val());
 
     // Añadir observaciones y anotaciones de cada aprendiz
     $("#tabla-aprendices .row:not(.header)").each(function () {
