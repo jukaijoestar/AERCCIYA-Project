@@ -152,3 +152,32 @@
     background-color: #e0e0e0;
     /* background-color: green; */
 }
+
+.table-container {
+    max-height: 200px; /* Ajusta este valor según tus necesidades */
+    overflow-y: auto;
+    display: none; /* Ocultar inicialmente */
+}
+
+.table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.header,
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.header .cell {
+    font-weight: bold;
+    background-color: #f2f2f2;
+}

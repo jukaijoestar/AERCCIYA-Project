@@ -9,14 +9,6 @@ if (!isset($_SESSION['valid'])) {
 
 header('Content-Type: application/json');
 
-try {
-    $pdo = new PDO('mysql:host=localhost;dbname=comite_sena', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo json_encode(["status" => "error", "message" => "Error de conexión: " . $e->getMessage()]);
-    exit();
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $acta_num = $_POST['Acta'];
     $nombre = $_POST['nombre'];

@@ -1,6 +1,11 @@
 <?php
-// Incluir el archivo de configuración de la base de datos
-include("../model/config.php");
+
+$con = mysqli_connect("localhost", "root", "", "comite_sena") or die("Couldn't connect");
+
+// Verificar conexión
+if ($con->connect_error) {
+    die("Conexión fallida: " . $con->connect_error);
+}
 
 // Verificar si se recibió una solicitud POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -71,4 +76,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Cerrar conexión a la base de datos
 $con->close();
-?>

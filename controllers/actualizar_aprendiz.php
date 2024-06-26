@@ -1,5 +1,11 @@
 <?php
-include("../model/config.php");
+
+$con = mysqli_connect("localhost", "root", "", "comite_sena") or die("Couldn't connect");
+
+// Verificar conexión
+if ($con->connect_error) {
+    die("Conexión fallida: " . $con->connect_error);
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_aprendiz = $_POST['id_aprendiz'];
@@ -24,4 +30,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(['success' => false, 'message' => $con->error]);
     }
 }
-?>

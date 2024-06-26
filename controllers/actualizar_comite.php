@@ -1,6 +1,12 @@
 <?php
 session_start();
-include("../model/config.php");
+ 
+$con = mysqli_connect("localhost","root","","comite_sena") or die("Couldn't connect");
+
+// Verificar conexión
+if ($con->connect_error) {
+    die("Conexión fallida: " . $con->connect_error);
+}
 
 header('Content-Type: application/json');
 

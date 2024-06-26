@@ -2,7 +2,13 @@
 session_start();
 header('Content-Type: application/json');
 
-include("../model/config.php");
+
+$con = mysqli_connect("localhost", "root", "", "comite_sena") or die("Couldn't connect");
+
+// Verificar conexión
+if ($con->connect_error) {
+    die("Conexión fallida: " . $con->connect_error);
+}
 
 // Inicializar respuesta
 $response = ["success" => false];
@@ -51,4 +57,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 echo json_encode($response);
 exit();
-?>

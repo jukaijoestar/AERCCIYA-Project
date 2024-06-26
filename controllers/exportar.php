@@ -37,9 +37,17 @@ if (
 
     // Función para limpiar y decodificar en UTF-8
     function cleanAndDecode($data) {
-        return array_map('utf8_decode', array_map('urldecode', $data));
+        return array_map('urldecode', $data);
     }
 
+    // Asegurar que los datos estén en UTF-8
+    function ensureUtf8($data) {
+        return array_map(function($item) {
+            return mb_convert_encoding($item, 'UTF-8', 'auto');
+        }, $data);
+    }
+
+    // Limpiar y decodificar los datos
     $tipo_documento = cleanAndDecode($tipo_documento);
     $numero_documento = cleanAndDecode($numero_documento);
     $nombre_completo = cleanAndDecode($nombre_completo);
@@ -51,6 +59,19 @@ if (
     $anotaciones_nombre_completo = cleanAndDecode($anotaciones_nombre_completo);
     $anotaciones_apellido_completo = cleanAndDecode($anotaciones_apellido_completo);
     $anotaciones_contenido = cleanAndDecode($anotaciones_contenido);
+
+    // Asegurar que todos los datos estén en UTF-8
+    $tipo_documento = ensureUtf8($tipo_documento);
+    $numero_documento = ensureUtf8($numero_documento);
+    $nombre_completo = ensureUtf8($nombre_completo);
+    $apellido_completo = ensureUtf8($apellido_completo);
+    $contenido = ensureUtf8($contenido);
+
+    $anotaciones_tipo_documento = ensureUtf8($anotaciones_tipo_documento);
+    $anotaciones_numero_documento = ensureUtf8($anotaciones_numero_documento);
+    $anotaciones_nombre_completo = ensureUtf8($anotaciones_nombre_completo);
+    $anotaciones_apellido_completo = ensureUtf8($anotaciones_apellido_completo);
+    $anotaciones_contenido = ensureUtf8($anotaciones_contenido);
 
     // Formatear la fecha
     $fecha_formateada = date('j', strtotime($fecha)) . ' de ';
@@ -65,32 +86,31 @@ if (
 
     // Plantilla de Word
     $templateFile = '../static/templates/Acta_Comite_extraordinario_Template.docx';
-    $outputFile = $nombre . '.docx';
 
     // Crear un objeto TemplateProcessor
     $templateProcessor = new TemplateProcessor($templateFile);
 
     // Asignar valores a la plantilla
-    $templateProcessor->setValue('Acta_Num', utf8_encode($acta_num));
-    $templateProcessor->setValue('Nombre', utf8_encode($nombre));
-    $templateProcessor->setValue('Fecha', utf8_encode($fecha_formateada));
-    $templateProcessor->setValue('Hora_inicio', utf8_encode($hora_inicio_formateada));
-    $templateProcessor->setValue('Hora_fin', utf8_encode($hora_fin_formateada));
-    $templateProcessor->setValue('Agendas', utf8_encode($agendas));
-    $templateProcessor->setValue('Objetivo', utf8_encode($objetivo));
-    $templateProcessor->setValue('Desarrollo', utf8_encode($desarrollo));
-    $templateProcessor->setValue('Responsable', utf8_encode($responsable));
+    $templateProcessor->setValue('Acta_Num', $acta_num);
+    $templateProcessor->setValue('Nombre', $nombre);
+    $templateProcessor->setValue('Fecha', $fecha_formateada);
+    $templateProcessor->setValue('Hora_inicio', $hora_inicio_formateada);
+    $templateProcessor->setValue('Hora_fin', $hora_fin_formateada);
+    $templateProcessor->setValue('Agendas', $agendas);
+    $templateProcessor->setValue('Objetivo', $objetivo);
+    $templateProcessor->setValue('Desarrollo', $desarrollo);
+    $templateProcessor->setValue('Responsable', $responsable);
 
     // Añadir filas a la tabla de observaciones
     $count = count($tipo_documento);
     $templateProcessor->cloneRow('Tip_Doc', $count);
     for ($i = 0; $i < $count; $i++) {
         $row_index = $i + 1;
-        $templateProcessor->setValue("Tip_Doc#{$row_index}", utf8_encode($tipo_documento[$i]));
-        $templateProcessor->setValue("Num_Doc#{$row_index}", utf8_encode($numero_documento[$i]));
-        $templateProcessor->setValue("Nom_Comp#{$row_index}", utf8_encode($nombre_completo[$i]));
-        $templateProcessor->setValue("Ap_Comp#{$row_index}", utf8_encode($apellido_completo[$i]));
-        $templateProcessor->setValue("Contenido#{$row_index}", utf8_encode($contenido[$i]));
+        $templateProcessor->setValue("Tip_Doc#{$row_index}", $tipo_documento[$i]);
+        $templateProcessor->setValue("Num_Doc#{$row_index}", $numero_documento[$i]);
+        $templateProcessor->setValue("Nom_Comp#{$row_index}", $nombre_completo[$i]);
+        $templateProcessor->setValue("Ap_Comp#{$row_index}", $apellido_completo[$i]);
+        $templateProcessor->setValue("Contenido#{$row_index}", $contenido[$i]);
     }
 
     // Filtrar y clasificar anotaciones
@@ -98,7 +118,7 @@ if (
     $remisiones = [];
     $llamados = [];
     for ($i = 0; $i < count($anotaciones_contenido); $i++) {
-        $nombre_completo_aprendiz = utf8_encode($anotaciones_nombre_completo[$i]) . ' ' . utf8_encode($anotaciones_apellido_completo[$i]);
+        $nombre_completo_aprendiz = $anotaciones_nombre_completo[$i] . ' ' . $anotaciones_apellido_completo[$i];
         switch (strtolower($anotaciones_contenido[$i])) {
             case 'reconocimiento':
                 $reconocimientos[] = $nombre_completo_aprendiz;
@@ -117,12 +137,23 @@ if (
     $templateProcessor->setValue('remisiones', implode(', ', $remisiones));
     $templateProcessor->setValue('llamados', implode(', ', $llamados));
 
-    // Guardar el documento generado
-    $templateProcessor->saveAs($outputFile);
+    // Guardar el documento generado en memoria
+    $temp_file = tempnam(sys_get_temp_dir(), 'Word');
+    $templateProcessor->saveAs($temp_file);
 
-    // Descargar el archivo generado
-    header("Content-Disposition: attachment; filename=\"$outputFile\"");
-    readfile($outputFile);
+    // Enviar el archivo al navegador para su descarga
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    header('Content-Disposition: attachment; filename="'.basename($nombre . '.docx').'"');
+    header('Content-Transfer-Encoding: binary');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($temp_file));
+    readfile($temp_file);
+
+    // Eliminar el archivo temporal
+    unlink($temp_file);
     exit;
 } else {
     echo "No se recibieron todos los datos necesarios para generar el documento.";

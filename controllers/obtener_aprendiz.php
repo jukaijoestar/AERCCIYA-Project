@@ -1,6 +1,11 @@
 <?php
-include("../model/config.php");
 
+$con = mysqli_connect("localhost", "root", "", "comite_sena") or die("Couldn't connect");
+
+// Verificar conexión
+if ($con->connect_error) {
+    die("Conexión fallida: " . $con->connect_error);
+}
 // Verificar si se recibió el ID de la ficha
 if (isset($_GET['id_ficha'])) {
     $id_ficha = $_GET['id_ficha'];
@@ -44,4 +49,3 @@ if (isset($_GET['id_ficha'])) {
     // Si no se proporcionó el ID de la ficha
     echo json_encode(['error' => 'ID de ficha no proporcionado']);
 }
-?>
