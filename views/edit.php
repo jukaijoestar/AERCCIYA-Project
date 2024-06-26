@@ -1,11 +1,66 @@
 <?php 
-   session_start();
+session_start();
 
-   include("../model/config.php");
-   if(!isset($_SESSION['valid'])){
+include("../model/config.php");
+
+// Verificar si la sesión es válida
+if(!isset($_SESSION['valid'])){
     header("Location: ../index.php");
-   }
+    exit(); // Asegurarse de que el script se detenga después de redirigir
+}
+
+// Procesar el formulario de actualización del perfil
+if(isset($_POST['submit'])){
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $age = $_POST['age'];
+    $id = $_SESSION['id'];
+
+    try {
+        // Preparar la consulta SQL para actualizar el perfil
+        $stmt = $pdo->prepare("UPDATE users SET Username=:username, Email=:email, Age=:age WHERE Id=:id");
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':age', $age, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Verificar si la actualización fue exitosa
+        if($stmt->rowCount() > 0){
+            echo "<div class='message'>
+                    <p>¡Perfil actualizado!</p>
+                  </div> <br>";
+            echo "<a href='home.php'><button class='btn'>Ir a Inicio</button></a>";
+        } else {
+            echo "No se pudo actualizar el perfil.";
+        }
+    } catch(PDOException $e) {
+        die("Error: " . $e->getMessage());
+    }
+} else {
+    // Obtener los datos actuales del usuario para prellenar el formulario
+    $id = $_SESSION['id'];
+
+    try {
+        // Preparar y ejecutar la consulta para obtener los datos del usuario
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE Id=:id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Obtener los resultados y asignarlos a variables
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $res_Uname = $result['Username'];
+        $res_Email = $result['Email'];
+        $res_Age = $result['Age'];
+
+    } catch(PDOException $e) {
+        die("Error: " . $e->getMessage());
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,37 +75,7 @@
     <?php include '../components/menu.php'; ?>
     
     <section>
-        <div >
-            <?php 
-               if(isset($_POST['submit'])){
-                $username = $_POST['username'];
-                $email = $_POST['email'];
-                $age = $_POST['age'];
-
-                $id = $_SESSION['id'];
-
-                $edit_query = mysqli_query($con,"UPDATE users SET Username='$username', Email='$email', Age='$age' WHERE Id=$id ") or die("error occurred");
-
-                if($edit_query){
-                    echo "<div class='message'>
-                    <p>Profile Updated!</p>
-                </div> <br>";
-              echo "<a href='home.php'><button class='btn'>Go Home</button>";
-       
-                }
-               }else{
-
-                $id = $_SESSION['id'];
-                $query = mysqli_query($con,"SELECT*FROM users WHERE Id=$id ");
-
-                while($result = mysqli_fetch_assoc($query)){
-                    $res_Uname = $result['Username'];
-                    $res_Email = $result['Email'];
-                    $res_Age = $result['Age'];
-                }
-
-            ?>
-            
+        <div>
             <header class="edit-text">
                 <i class="ph ph-warning"></i>
                 <p>¡Actualiza tu información para mantenerla siempre precisa! Haz clic para actualizar y mantener tus datos al día.</p>
@@ -59,17 +84,17 @@
             <form action="" method="post" class="form-edit-profile">
                 <div class="inpust-perfil">
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username" value="<?php echo $res_Uname; ?>" autocomplete="off" required>
+                    <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($res_Uname); ?>" autocomplete="off" required>
                 </div>
 
                 <div class="inpust-perfil">
                     <label for="email">Email</label>
-                    <input type="text" name="email" id="email" value="<?php echo $res_Email; ?>" autocomplete="off" required>
+                    <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($res_Email); ?>" autocomplete="off" required>
                 </div>
 
                 <div class="inpust-perfil">
                     <label for="age">Age</label>
-                    <input type="number" name="age" id="age" value="<?php echo $res_Age; ?>" autocomplete="off" required>
+                    <input type="number" name="age" id="age" value="<?php echo htmlspecialchars($res_Age); ?>" autocomplete="off" required>
                 </div>
                 
                 <div class="accion-btn">
@@ -78,9 +103,7 @@
                     </button>
                 </div>
             </form>
-
         </div>
-        <?php } ?>
-      </section>
+    </section>
 </body>
 </html>
